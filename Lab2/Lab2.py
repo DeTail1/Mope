@@ -2,7 +2,7 @@ from random import randint
 from math import sqrt
 from numpy.linalg import det
 from prettytable import PrettyTable
-import time
+import time //імпорт time
 
 execution_time_list = []
 
@@ -14,7 +14,7 @@ x2_max = 10
 y_min = (20 - 323) * 10
 y_max = (30 - 323) * 10
 
-for _ in range(0, 100):
+for _ in range(0, 100): // виконаня програми 100 разів
     start_time = time.time()
 
     romanovsky_table = {(2, 3, 4): 1.73, (5, 6, 7): 2.16, (8, 9): 2.43, (10, 11): 2.62,
@@ -109,7 +109,7 @@ for _ in range(0, 100):
     for i in range(len(y_lists)):
         naturalize_checking_table.add_row([i + 1, nx1[i], nx2[i], average_y[i], round(a0 + a1 * nx1[i] + a2 * nx2[i], 4)])
 
-    execution_time_list.append((time.time() - start_time))
+    execution_time_list.append((time.time() - start_time)) // сумування всього часу за 100 ітерацій
 
 print(plan_table, end="\n\n")
 print(romanovsky_matrix, end="\n\n")
@@ -120,4 +120,4 @@ print(naturalize_checking_table)
 print(f"Відхилення: {deviation}")
 print(f"Критерій Романовського: {romanovsky_value}")
 
-print(f"\nСередній час виконання {sum(execution_time_list) / 100}")
+print(f"\nСередній час виконання {sum(execution_time_list) / 100}")//виведення останньої ітерації та середній час
