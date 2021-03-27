@@ -1,10 +1,10 @@
 import random
 from prettytable import PrettyTable
 
-A0 = 2
-A1 = 7
-A2 = 1
-A3 = 5
+A0 = random.randint(1, 200)
+A1 = random.randint(1, 200)
+A2 = random.randint(1, 200)
+A3 = random.randint(1, 200)
 
 
 def f(x1, x2, x3):
