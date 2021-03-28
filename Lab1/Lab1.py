@@ -1,7 +1,7 @@
 import random
 from prettytable import PrettyTable
 
-A0 = random.randint(1, 200)
+A0 = random.randint(1, 200)//генеруються від 1 до 200
 A1 = random.randint(1, 200)
 A2 = random.randint(1, 200)
 A3 = random.randint(1, 200)
