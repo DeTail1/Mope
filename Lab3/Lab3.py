@@ -13,6 +13,8 @@ avgMinX = (-5 - 25 + 15) / 3
 maxY = 200 + int(avgMaxX)
 minY = 200 + int(avgMinX)
 
+minor_coefs_count = 0
+
 
 def matrixPlan(n, m):
     y = np.zeros(shape=(n, m))
@@ -125,6 +127,7 @@ def test_fisher(y, avgY, y_new, n, m, d):
 
 
 def main(n, m):
+    global minor_coefs_count
     f1 = m - 1
     f2 = n
     f3 = f1 * f2
@@ -153,8 +156,9 @@ def main(n, m):
     print('\nКритерій Стюдента =>\n', ts)
     res = [t for t in ts if t > t_student]
     final_k = [B[ts.index(i)] for i in ts if i in res]
-    print('Коефіцієнти {} статистично незначущі, тому ми виключаємо їх з рівняння.'.format(
-        [i for i in B if i not in final_k]))
+    minor_coefs = [i for i in B if i not in final_k]
+    minor_coefs_count += len(minor_coefs)
+    print('Коефіцієнти {} статистично незначущі, тому ми виключаємо їх з рівняння.'.format(minor_coefs))
 
     y_New = []
     for j in range(n):
@@ -179,7 +183,9 @@ def main(n, m):
         print('Математична модель не адекватна експериментальним даним')
 
 
-if variant == 323:
-    n = 4  # кількість експериментів (рядків матриці планування)
-    m = 4  # кількість вимірів y за однією й тією ж самою комбінації факторів
-    main(n, m)
+for i in range(100):
+    if variant == 323:
+        n = 4  # кількість експериментів (рядків матриці планування)
+        m = 4  # кількість вимірів y за однією й тією ж самою комбінації факторів
+        main(n, m)
+print(f'Кількість незначущих коефіцієнтів: {minor_coefs_count}')
