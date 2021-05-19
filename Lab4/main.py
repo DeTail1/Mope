@@ -98,10 +98,10 @@ def kriteriy_studenta2(x, y, y_aver, n, m):
     return ts
 
 
-def kriteriy_studenta(x, y_average, n, m, dispersion):
-    dispersion_average = sum(dispersion) / n
-    s_beta_s = (dispersion_average / n / m) ** 0.5
-
+def kriteriy_studenta(x, y_average, n, m, dispersion):  # якщо розміри вибірок відрізняються мало, то застосовується
+    dispersion_average = sum(dispersion) / n            # спрощена формула наближених результатів, якщо розміри
+    s_beta_s = (dispersion_average / n / m) ** 0.5      # вибірок відрізняються значно то застосовується точніша
+                                                        # і складніша формула (kriteriy_studenta2)
     beta = [sum(1 * y for y in y_average) / n]
     for i in range(3):
         b = sum(j[0] * j[1] for j in zip(x[:, i], y_average)) / n
