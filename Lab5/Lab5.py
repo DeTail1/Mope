@@ -164,6 +164,20 @@ def kriteriy_fishera(y, y_aver, y_new, n, m, d):
 
     return S_ad / S_kv_aver
 
+def check_useless(X, Y, B, n, m):
+    f1 = m - 1
+    f2 = n
+    f3 = f1 * f2
+    q = 0.05
+    y_aver = [round(sum(i) / len(i), 3) for i in Y]
+    student = partial(t.ppf, q=1 - q)
+    t_student = student(df=f3)
+    ts = kriteriy_studenta(X[:, 1:], Y, y_aver, n, m)
+    res = [t for t in ts if t > t_student]
+    final_k = [B[i] for i in range(len(ts)) if ts[i] in res]
+    print('\nКоефіцієнти {} статистично незначущі'.format(
+        [round(i, 3) for i in B if i not in final_k]))
+   
 
 def check(X, Y, B, n, m):
     print('\n\tПеревірка рівняння:')
@@ -178,7 +192,7 @@ def check(X, Y, B, n, m):
 
     G_kr = cohren(f1, f2)
     ###
-
+    check_useless(X, Y, B, n, m)
     y_aver = [round(sum(i) / len(i), 3) for i in Y]
     print('\nСереднє значення y:', y_aver)
 
@@ -193,7 +207,7 @@ def check(X, Y, B, n, m):
         print("Необхідно збільшити кількість дослідів")
         m += 1
         main(n, m)
-
+    check_useless(X, Y, B, n, m)
     ts = kriteriy_studenta(X[:, 1:], Y, y_aver, n, m)
     print('\nКритерій Стьюдента:\n', ts)
     res = [t for t in ts if t > t_student]
@@ -214,7 +228,7 @@ def check(X, Y, B, n, m):
         print('')
         return
     f4 = n - d
-
+    check_useless(X, Y, B, n, m)
     F_p = kriteriy_fishera(Y, y_aver, y_new, n, m, d)
 
     fisher = partial(f.ppf, q=0.95)
