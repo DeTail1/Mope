@@ -4,7 +4,7 @@ import numpy as np
 from numpy.linalg import solve
 from scipy.stats import f, t
 from prettytable import PrettyTable
-
+import time
 
 def round_matrix(matrix, n_to_round=3):
     for i in range(len(matrix)):
@@ -156,6 +156,7 @@ def main(n, m):
                  list_for_a[k][6] + beta[8] * list_for_a[k][7] + beta[9] * list_for_a[k][8] + beta[10] * list_for_a[k][9]
     for i in range(15):
         print("{:.3f}".format(y_i[i]), end=" ")
+    start_time_kohren = time.perf_counter()
     print("\n\nПеревірка за критерієм Кохрена")
     Gp = max(dispersions) / sum(dispersions)
     Gt = 0.3346
@@ -164,7 +165,9 @@ def main(n, m):
         print("Дисперсія однорідна")
     else:
         print("Дисперсія неоднорідна")
+    print(f"Час перевірки однорідності дисперсії за Кохреном: {time.perf_counter() - start_time_kohren}")
 
+    start_time_student = time.perf_counter()
     print("\nПеревірка значущості коефіцієнтів за критерієм Стьюдента")
     sb = sum(dispersions) / len(dispersions)
     sbs = (sb / (15 * m)) ** 0.5
@@ -188,6 +191,7 @@ def main(n, m):
             d -= 1
         else:
             coefs1.append(beta[j])
+    print(f"Час перевірки значимості коефіцієнтів регресії за Стьюдентом: {time.perf_counter() - start_time_student}")
 
     print("Значущі коефіцієнти регресії:", [round(i, 3) for i in coefs1])
     print("Незначущі коефіцієнти регресії:", [round(i, 3) for i in coefs2])
@@ -200,6 +204,7 @@ def main(n, m):
     for i in range(15):
         print("{:.3f}".format(y_st[i]), end=" ")
 
+    start_time_fisher = time.perf_counter()
     print("\n\nПеревірка адекватності за критерієм Фішера")
     Sad = m * sum([(y_st[i] - Y_average[i]) ** 2 for i in range(15)]) / (n - d)
     Fp = Sad / sb
@@ -209,6 +214,6 @@ def main(n, m):
         print("Рівняння регресії адекватне при рівні значимості 0.05")
     else:
         print("Рівняння регресії неадекватне при рівні значимості 0.05")
-
+    print(f"Час перевірки адекватності моделі оригіналу за допомогою критерію Фішера: {time.perf_counter() - start_time_fisher}")
 
 main(15, 3)
